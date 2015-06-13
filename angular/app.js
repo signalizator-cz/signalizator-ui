@@ -1,8 +1,16 @@
 var app = angular.module("signalizator", ["leaflet-directive"]);
 
 app.factory('feedService', ['$http', function($http) {
-    var entrypoint = "http://localhost/signalizator/dummy_data/feed";
-    var suffix = ".json";
+
+    var dummy_data = false;
+
+    if (dummy_data) {
+        var entrypoint = "http://localhost/signalizator/dummy_data/feed";
+        var suffix = ".json";
+    } else {
+        var entrypoint = "http://signalizatorrest.azurewebsites.net/";
+        var suffix = "";
+    }
 
     return {
         records: function(area_of_interest) {
@@ -74,7 +82,7 @@ app.controller("GoogleMapsFullsizeController",
         city: {
             lat: 50.08,
             lng: 14.41,
-            zoom: 13
+            zoom: 12
         },
         circle: {
             lat: 50.08,
