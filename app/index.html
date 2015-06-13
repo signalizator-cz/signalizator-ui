@@ -16,8 +16,6 @@
     <script src="../components/leaflet-plugins/layer/tile/Google.js"></script>
     <script src="../components/Leaflet.fullscreen/dist/Leaflet.fullscreen.min.js"></script>
     <script src="../components/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
-
-
     <script src="../components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
 
 
@@ -41,10 +39,11 @@
     </div>
 
     <div id="feed" class="panel panel-default">
-        <ul class="panel-group list-unstyled">
-            <li id="feed-accordion" class="panel panel-default" ng-repeat="record in records track by record.id">
+        <ul class="paarea_of_interestnel-group list-unstyled">
+            <li id="record-{{record.id}}" class="panel panel-default" ng-class="{selected: record.id == 1}" ng-repeat="record in records track by record.id">
                 <a class="panel-heading" title="{{record.title}}"
-                    data-toggle="collapse" data-parent="#feed-accordion" href="#collapse-{{record.id}}">
+                    data-toggle="collapse" data-parent="#record-{{record.id}}" href="#collapse-{{record.id}}"
+                    ng-click="selectRecord(record, $event)">
                     {{record.title}}</a>
                 <div id="collapse-{{record.id}}" class="panel-collapse collapse">
                     <p><a ng-href="{{record.url}}" title="{{record.title}}">{{record.url}}</a></p>

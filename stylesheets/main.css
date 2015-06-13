@@ -32,7 +32,12 @@ html, body {
     margin-bottom: 0;
 }
 
-#feed-accordion a {
+#feed li.selected>a {
+    background-color: yellow;
+    background-image: none;
+}
+
+#feed li>a {
     display: block;
 }
 

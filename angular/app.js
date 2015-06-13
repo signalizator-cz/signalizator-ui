@@ -95,11 +95,12 @@ app.controller("GoogleMapsFullsizeController",
             });
         },
 
-        selectRecord: function(rid) {
-
+        selectRecord: function(record, $event) {
+            console.log(record);
+            console.log($event);
+            record.selected = true;
         }
     });
-
 
 leafletData.getMap().then(function(map) {
   var drawnItems = $scope.controls.edit.featureGroup;
@@ -108,21 +109,13 @@ leafletData.getMap().then(function(map) {
     drawnItems.clearLayers();
     drawnItems.addLayer(layer);
     console.log("Drawn item: " + JSON.stringify(layer.toGeoJSON()));
-
-    if (layer instanceof L.Circle) {
-        $scope.shape.circle = layer.getLatLng();
-        $scope.shape.circle.radius = layer.getRadius();
-    } else if (layer instanceof L.Rectangle) {
-        $scope.shape.rect = {};
-    }
 });
 });
 
 $scope.refreshRecords();
 
 $scope.$on('leafletDirectiveMarker.click', function (e, args) {
-    console.log(args.model.rid + ' / ' + args.model.id);
-    console.log(args);
+    $scope.selectRecord($scope.records[args.model.rid]);
 });
 
 }]);
