@@ -40,7 +40,7 @@
         <leaflet class="span2" event-broadcast="events" center="city" layers="layers" markers="markers" controls="controls" height="100%"></leaflet>
     </div>
 
-    <div id="feed" class="panel panel-default">
+    <div id="feed" class="panel panel-default scrollable-panel">
         <ul class="panel-group list-unstyled">
             <li id="feed-accordion" class="panel panel-default" ng-repeat="record in records track by record.id">
                 <a class="panel-heading" title="{{record.title}}"

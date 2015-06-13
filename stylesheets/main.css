@@ -39,3 +39,7 @@ html, body {
 form#circle input {
     width: 5em;
 }
+
+.scrollable-panel {
+	overflow: auto;
+}
