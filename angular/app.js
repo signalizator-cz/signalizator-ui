@@ -5,7 +5,7 @@ app.factory('feedService', ['$http', function($http) {
     var suffix = ".json";
 
     return {
-        feed: function(area_of_interest) {
+        records: function(area_of_interest) {
             var url = entrypoint + suffix;
             var promise = $http.get(url, {params: area_of_interest})
                 .then(function (response) {
@@ -82,16 +82,21 @@ app.controller("GoogleMapsFullsizeController",
             radius: 13
         },
 
-        refreshFeed: function() {
-            feedService.feed().then(function(data) {
-                $scope.feed = data.feed;
-            $scope.markers = _.flatten(_.map(data.feed, function(record) {
-                return _.map(record.markers, function(marker) {
+        refreshRecords: function() {
+            feedService.records().then(function(data) {
+                $scope.records = data.records;
+            $scope.markers = _.flatten(_.map(data.records, function(record) {
+                return _.map(_.values(record.markers), function(marker) {
                     marker.rid = record.id;
+                    marker.icon = {"type": 'awesomeMarker', "icon": 'tag', "markerColor": 'red'};
                     return marker;
                 });
             }));
             });
+        },
+
+        selectRecord: function(rid) {
+
         }
     });
 
@@ -113,12 +118,11 @@ leafletData.getMap().then(function(map) {
 });
 });
 
-$scope.refreshFeed();
+$scope.refreshRecords();
 
 $scope.$on('leafletDirectiveMarker.click', function (e, args) {
-    console.log(e);
+    console.log(args.model.rid + ' / ' + args.model.id);
     console.log(args);
-    console.log(this);
 });
 
 }]);

@@ -10,7 +10,8 @@
     "Leaflet.fullscreen": "Leaflet/Leaflet.fullscreen",
     "angular-leaflet-directive": "*",
     "leaflet.draw": "*",
-    "lodash": "*"
+    "lodash": "*",
+    "Leaflet.awesome-markers": "*"
   },
   "ignore": [
     "**/.*",
