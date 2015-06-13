@@ -1,0 +1,23 @@
+{
+    "id": 1,
+    "title": "Title 1",
+    "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "url": "http://www.seznam.cz",
+    "markers": [
+        {
+            "id": 1,
+            "lat": 50.1,
+            "lng": 14.5
+        },
+        {
+            "id": 2,
+            "lat": 50.05,
+            "lng": 14.51
+        },
+        {
+            "id": 3,
+            "lat": 50.08,
+            "lng": 14.41
+        }
+    ]
+}
