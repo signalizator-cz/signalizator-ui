@@ -25,7 +25,6 @@ app.factory('feedService', ['$http', function($http) {
             var url = entrypoint + suffix;
             var promise = $http.get(url, {params: getParams})
                 .then(function (response) {
-                    console.log("Response for " + url + ": " + JSON.stringify(response));
                     return response.data;
             });
             return promise;

@@ -12,7 +12,7 @@ html, body {
 
 #box, #feed {
     width: 30em;
-    text-align: center;
+    text-align: left;
 }
 
 #box {
@@ -52,7 +52,9 @@ form#circle input {
 }
 .header {
 	height: 15%;
-	margin-top: -20px;
+	padding: 25px;
+	padding-left: 20px;
+	background-color: #016077;
 }
 .right {
     width: 180px;
@@ -66,4 +68,7 @@ form#circle input {
     width: auto;
     overflow: hidden;
     height: 85%;
+}
+.record-title {
+	color: #ff4c00;
 }
