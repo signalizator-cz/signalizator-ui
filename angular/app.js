@@ -78,6 +78,10 @@ app.controller("GoogleMapsFullsizeController",
             }
         },
 
+        icons: {
+            false: 'red',
+            true: 'green'
+        },
 
         city: {
             lat: 50.08,
@@ -89,14 +93,17 @@ app.controller("GoogleMapsFullsizeController",
             lng: 14.41,
             radius: 13
         },
+        selectedRecords: [],
 
         refreshRecords: function() {
             feedService.records().then(function(data) {
                 $scope.records = data.records;
+            $scope.markersMap = {};
             $scope.markers = _.flatten(_.map(data.records, function(record) {
                 return _.map(_.values(record.markers), function(marker) {
                     marker.rid = record.id;
                     marker.icon = {"type": 'awesomeMarker', "icon": 'tag', "markerColor": 'red'};
+                    $scope.markersMap[record.id + '-' + marker.id] = marker;
                     return marker;
                 });
             }));
@@ -104,9 +111,22 @@ app.controller("GoogleMapsFullsizeController",
         },
 
         selectRecord: function(record, $event) {
-            console.log(record);
-            console.log($event);
+            for (var i = 0; i < $scope.selectedRecords.length; i++) {
+                prevSelectedRec = $scope.selectedRecords[i];
+                prevSelectedRec.selected = false;
+                $scope.setSelectedMarkers(prevSelectedRec, false);
+            }
             record.selected = true;
+            $scope.selectedRecords = [record];
+            $scope.setSelectedMarkers(record, true);
+        },
+
+        setSelectedMarkers: function(record, selected) {
+            markersArr = _.values(record.markers);
+            for (var i = 0; i < markersArr.length; i++) {
+                marker = markersArr[i];
+                $scope.markersMap[record.id + '-' + marker.id].icon.markerColor = $scope.icons[selected];
+            }
         }
     });
 

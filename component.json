@@ -11,7 +11,8 @@
     "angular-leaflet-directive": "*",
     "leaflet.draw": "*",
     "lodash": "*",
-    "Leaflet.awesome-markers": "*"
+    "Leaflet.awesome-markers": "*",
+    "leaflet.markercluster": "*"
   },
   "ignore": [
     "**/.*",
