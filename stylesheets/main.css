@@ -11,9 +11,8 @@ html, body {
 }
 
 #box, #feed {
-    position: absolute;
     width: 30em;
-    z-index: 100;
+    /* z-index: 100;*/
     text-align: center;
 }
 
@@ -25,7 +24,7 @@ html, body {
 #feed {
     top: 1em;
     right: 1em;
-    height: 90%
+    height: 100%
 }
 
 #feed ul {
@@ -41,5 +40,22 @@ form#circle input {
 }
 
 .scrollable-panel {
+
+   /* position: absolute; */
 	overflow: auto;
+}
+.scrollable-panel div{
+	margin-bottom: 0px;
+}
+.right {
+    width: 180px;
+    float: right;
+    background: #aafed6;
+}
+.left {
+    float: none; /* not needed, just for clarification */
+    background: #e8f6fe;
+    /* the next props are meant to keep this block independent from the other floated one */
+    width: auto;
+    overflow: hidden;
 }

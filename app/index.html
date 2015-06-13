@@ -36,11 +36,8 @@
 </head>
 
 <body ng-controller="GoogleMapsFullsizeController">
-    <div class="fullscreen">
-        <leaflet class="span2" event-broadcast="events" center="city" layers="layers" markers="markers" controls="controls" height="100%"></leaflet>
-    </div>
-
-    <div id="feed" class="panel panel-default scrollable-panel">
+<div id="feed" class="scrollable-panel right">
+<div class="panel panel-default ">
         <ul class="panel-group list-unstyled">
             <li id="feed-accordion" class="panel panel-default" ng-repeat="record in records track by record.id">
                 <a class="panel-heading" title="{{record.title}}"
@@ -52,6 +49,13 @@
                 </div>
             </li>
         </ul>
+        </div>
     </div>
+    
+    <div class="fullscreen left">
+        <leaflet class="span2" event-broadcast="events" center="city" layers="layers" markers="markers" controls="controls" height="100%"></leaflet>
+    </div>
+
+    
 </body>
 </html>
