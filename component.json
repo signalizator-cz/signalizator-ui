@@ -6,7 +6,11 @@
     "leaflet": "0.7.x",
     "leaflet-plugins": "*",
     "font-awesome": "~4.3.x",
-    "bootstrap": "*"
+    "bootstrap": "*",
+    "Leaflet.fullscreen": "Leaflet/Leaflet.fullscreen",
+    "angular-leaflet-directive": "*",
+    "leaflet.draw": "*",
+    "lodash": "*"
   },
   "ignore": [
     "**/.*",
