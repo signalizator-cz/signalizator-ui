@@ -14,8 +14,16 @@ app.factory('feedService', ['$http', function($http) {
 
     return {
         records: function(area_of_interest) {
+
+            var ld = area_of_interest[0];
+            var lu = area_of_interest[1];
+            var ru = area_of_interest[2];
+            var rd = area_of_interest[3];
+            var getParams = {'x1':ld[0],'y1':ld[1],'x2':ru[0],'y2':ru[1]};
+            //var getParams = {'lng':ld[0],'lat':ld[1]};
+            
             var url = entrypoint + suffix;
-            var promise = $http.get(url, {params: area_of_interest})
+            var promise = $http.get(url, {params: getParams})
                 .then(function (response) {
                     console.log("Response for " + url + ": " + JSON.stringify(response));
                     return response.data;
@@ -95,8 +103,8 @@ app.controller("GoogleMapsFullsizeController",
         },
         selectedRecords: [],
 
-        refreshRecords: function() {
-            feedService.records().then(function(data) {
+        refreshRecords: function(coordinates) {
+            feedService.records(coordinates).then(function(data) {
                 $scope.records = data.records;
             $scope.markersMap = {};
             $scope.markers = _.flatten(_.map(data.records, function(record) {
@@ -137,10 +145,10 @@ leafletData.getMap().then(function(map) {
     drawnItems.clearLayers();
     drawnItems.addLayer(layer);
     console.log("Drawn item: " + JSON.stringify(layer.toGeoJSON()));
+    
+    $scope.refreshRecords(layer.toGeoJSON().geometry.coordinates[0]);
 });
 });
-
-$scope.refreshRecords();
 
 $scope.$on('leafletDirectiveMarker.click', function (e, args) {
     $scope.selectRecord($scope.records[args.model.rid]);
