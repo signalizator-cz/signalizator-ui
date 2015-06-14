@@ -55,6 +55,9 @@ form#circle input {
 	padding: 25px;
 	padding-left: 20px;
 	background-color: #016077;
+	color: white;
+	font-family: "Squada One";
+	text-transform: uppercase;
 }
 .right {
     width: 180px;
@@ -71,4 +74,19 @@ form#circle input {
 }
 .record-title {
 	color: #ff4c00;
+	text-decoration: underline;
+}
+.custom-panel {
+    padding: 30px;
+    padding-top: 0px;
+}
+.announcment-icon {
+	background-image: url("../images/announcement_b30.png");
+	background-repeat: no-repeat;
+    background-position: left center; 
+}
+.no-corners {
+-webkit-border-radius: 0;
+-moz-border-radius: 0;
+border-radius: 0 !important;
 }
