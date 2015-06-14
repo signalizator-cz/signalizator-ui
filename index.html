@@ -65,12 +65,16 @@
 			<div class="custom-panel panel-default">
 				<div ng-show="subscribe" id="subscribe-panel" class="subscribe-panel">
 				<br/>
-				Pro zasílání notifikací emailem vyberte <a href="#" ng-click="enableDraw()">selektorem <span class="glyphicon glyphicon-stop"></span></a> oblast, která vás zajímá. Oznámení vám příjdou jednou týdně. 
-					<form action="#">
-						<label for="male" class="sr-only">Email</label>
-						<input type="email" name="email" ng-value="email"
+				Pro zasílání notifikací emailem vyberte <a href="#" ng-click="enableDraw()">selektorem <span class="glyphicon glyphicon-stop"></span></a> oblast, která vás zajímá. Oznámení vám příjdou jednou týdně.
+					<form name="subscription" action="#">
+						<label for="email" class="sr-only">Email</label>
+						<input type="email" name="email" ng-model="emailValue"
 							id="email" class="form-control" placeholder="Email na který posílat notifikace">
-						<input type="submit" class="btn" value="Odebirat novinky z vyznačené lokality" ng-click="subsribe(email,$event)">
+						<input type="submit" class="btn" value="Odebírat novinky z vyznačené lokality" ng-click="subscribe()"
+                            ng-disabled="!areaSelected">
+                        <div>
+                            <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+                        </div>
 					</form>
 					<hr/>
 				</div>

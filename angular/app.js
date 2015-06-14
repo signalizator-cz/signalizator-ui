@@ -1,8 +1,8 @@
 var app = angular.module("signalizator", ["leaflet-directive"]);
 
 app.controller("GoogleMapsFullsizeController",
-    [ "$scope", "$element", '$anchorScroll', '$location', "leafletData", "leafletMarkersHelpers", "leafletEvents", "feedService",
-    function($scope, $element, $anchorScroll, $location, leafletData, leafletMarkersHelpers, leafletEvents, feedService) {
+    [ "$scope", "$element", '$anchorScroll', '$location', "leafletData", "leafletMarkersHelpers", "leafletEvents", "feedService", "subscribeService",
+    function($scope, $element, $anchorScroll, $location, leafletData, leafletMarkersHelpers, leafletEvents, feedService, subscribeService) {
 
     angular.extend($scope, {
         // maxbounds: {
@@ -83,13 +83,14 @@ app.controller("GoogleMapsFullsizeController",
             }
         },
         events: {
-            markers: {
-                enable: leafletEvents.getAvailableMarkerEvents(),
-            },
-            map: {
-                enable: ['zoomend', 'dragend', 'viewreset'],
-                logic: 'emit'
-            }
+            disable: [],
+            // markers: {
+            //     enable: leafletEvents.getAvailableMarkerEvents(),
+            // },
+            // map: {
+            //     enable: ['zoomend', 'dragend'],
+            //     logic: 'emit'
+            // }
         },
 
         icons: {
@@ -110,9 +111,10 @@ app.controller("GoogleMapsFullsizeController",
         selectedRecords: [],
         areaSelected: false,
 
-        refreshRecords: function(coordinates) {
+        refreshRecords: function(bounds) {
             leafletMarkersHelpers.resetMarkerGroups();
-            feedService.records(coordinates).then(function(data) {
+            $scope.selectedAreaBounds = bounds;
+            feedService.records(bounds).then(function(data) {
                 $scope.records = data.records;
             $scope.markersMap = {};
             $scope.markers = _.flatten(_.map(data.records, function(record) {
@@ -124,6 +126,12 @@ app.controller("GoogleMapsFullsizeController",
                     return marker;
                 });
             }));
+
+            // console.log(leafletMarkersHelpers);
+            // leafletData.getMarkers('mainMap').then(function(lmarkers) {
+            //     console.log("mainMap");
+            //     console.log(lmarkers);
+            // });
             });
         },
 
@@ -154,13 +162,37 @@ app.controller("GoogleMapsFullsizeController",
             } else {
                 $anchorScroll();
             }
+        },
+
+        subscribe: function() {
+            console.log("subscribe");
+            console.log($scope.emailValue);
+            subscribeService.register($scope.selectedAreaBounds, $scope.emailValue).then(function(data) {
+                console.log(data);
+            });
+            $scope.addAlert();
+        },
+
+        alerts: [],
+
+        addAlert: function() {
+            console.log("alert")
+            $scope.alerts.push({type: "success", msg: 'Odesláno.'});
+        },
+
+        closeAlert: function(index) {
+            $scope.alerts.splice(index, 1);
         }
     });
 
 leafletData.getMap('mainMap').then(function(map) {
     var drawnItems = $scope.controls.edit.featureGroup;
+
     map.on('draw:deleted', function (e) {
         $scope.areaSelected = false;
+        leafletData.getMap('mainMap').then(function(map) {
+            $scope.refreshRecords(map.getBounds());
+        });
     });
     map.on('draw:created', function (e) {
         var layer = e.layer;
@@ -182,15 +214,22 @@ $scope.$on('leafletDirectiveMarker.click', function (event, args) {
     $scope.selectRecord($scope.records[args.model.rid]);
 });
 $scope.$on('leafletDirectiveMap.zoomend', function(event, args){
-    leafletData.getMap('mainMap').then(function(map) {
-        $scope.refreshRecords(map.getBounds());
-    });
+    if (!$scope.areaSelected) {
+        leafletData.getMap('mainMap').then(function(map) {
+            $scope.refreshRecords(map.getBounds());
+        });
+    }
 });
 $scope.$on('leafletDirectiveMap.dragend', function(event, args){
-    leafletData.getMap('mainMap').then(function(map) {
-        $scope.refreshRecords(map.getBounds());
-    });
+    if (!$scope.areaSelected) {
+        leafletData.getMap('mainMap').then(function(map) {
+            $scope.refreshRecords(map.getBounds());
+        });
+    }
 });
 
+$scope.$on('clusterclick', function(event, args){
+    console.log('clusterclick');
+    console.log(event);
+});
 }]);
-
