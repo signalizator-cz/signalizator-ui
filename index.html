@@ -58,18 +58,21 @@
                     <div>
 			<ul class="nav nav-tabs nav-justified">
 				<li class="active"><a href="#" class="no-corners announcment-icon">Oznámení</a></li>
-				<li><a href="#" class="no-corners" ng-click="subscribe = !subscribe">Notifikace</a></li>
-				<li><a href="#" class="no-corners">Kontakty</a></li>
+				<li><a href="#" class="no-corners email-icon" ng-click="subscribe = !subscribe">Notifikace</a></li>
+				<li><a href="#" class="no-corners contact-icon">Kontakty</a></li>
 			</ul>
                     </div>
 			<div class="custom-panel panel-default">
 				<div ng-show="subscribe" id="subscribe-panel" class="subscribe-panel">
+				<br/>
+				Pro zasílání notifikací emailem vyberte selektorem <span class="glyphicon glyphicon-stop"></span> oblast, která vás zajímá. Oznámení vám příjdou jednou týdně. 
 					<form action="#">
 						<label for="male" class="sr-only">Email</label>
-						<input type="email" name="email"
-							id="email" class="form-control" placeholder="Email">
-						<input type="submit" class="btn" value="Odebirat novinky z lokality" ng-click="subsribe($event)">
+						<input type="email" name="email" ng-value="email"
+							id="email" class="form-control" placeholder="Email na který posílat notifikace">
+						<input type="submit" class="btn" value="Odebirat novinky z vyznačené lokality" ng-click="subsribe(email,$event)">
 					</form>
+					<hr/>
 				</div>
 				<div>
 					<h3>Výpis z úředních desek</h3>
