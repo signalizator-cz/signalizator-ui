@@ -56,9 +56,12 @@ form#circle input {
 	padding-left: 20px;
 	background-color: #016077;
 	color: white;
-	font-family: "Squada One";
-	text-transform: uppercase;
 	background-image: url("../images/seamless_1.png");
+}
+.header h1 {
+	font-family: "Squada One";
+	font-size: 3em;
+	text-transform: uppercase;
 }
 .right {
     width: 180px;

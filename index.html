@@ -39,9 +39,18 @@
 </head>
 
 <body ng-controller="GoogleMapsFullsizeController">
+<div style="height: 100%;">
 	<div class="header">
-		<img src="images/logo_pin_w_50.png">
-		<h1 style="display: inline; margin-left: 20px">Signalizator</h1>
+		<img src="images/logo_pin_w_50.png" style="float:left; margin-right:20px;">
+		<div style="float:left">
+			<h1 style="display: inline;">Signalizator</h1>
+			</br>
+			<span>Zprávy, úřední desky z vaší ulice</span>
+		</div>
+		<div style="float:right; text-align:right;">
+		<span>jsem@signalizator.cz</span><br/>
+		<span>Vytvořeno na hackathonu #PragueHacks</span>
+		</div>
 	</div>
 
     <div id="feed" class="scrollable-panel right">
@@ -76,5 +85,6 @@
     <div class="fullscreen left">
         <leaflet class="span2" event-broadcast="events" center="city" layers="layers" markers="markers" controls="controls" height="100%"></leaflet>
     </div>
+</div>
 </body>
 </html>
