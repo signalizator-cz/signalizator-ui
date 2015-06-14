@@ -58,12 +58,12 @@
                     <div>
 			<ul class="nav nav-tabs nav-justified">
 				<li class="active"><a href="#" class="no-corners announcment-icon">Oznámení</a></li>
-				<li><a href="#" class="no-corners" ng-click="showSubsribe($event)">Notifikace</a></li>
+				<li><a href="#" class="no-corners" ng-click="subscribe = !subscribe">Notifikace</a></li>
 				<li><a href="#" class="no-corners">Kontakty</a></li>
 			</ul>
                     </div>
 			<div class="custom-panel panel-default">
-				<div id="subscribe-panel" class="subscribe-panel">
+				<div ng-show="subscribe" id="subscribe-panel" class="subscribe-panel">
 					<form action="#">
 						<label for="male" class="sr-only">Email</label>
 						<input type="email" name="email"
