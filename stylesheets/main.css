@@ -30,8 +30,7 @@ html, body {
 }
 
 #feed li.selected>a {
-    background-color: yellow;
-    background-image: none;
+    color: #337ab7;
 }
 
 #feed li>a {
@@ -87,19 +86,19 @@ form#circle input {
 .announcment-icon {
 	background-image: url("../images/announcement_b30.png");
 	background-repeat: no-repeat;
-    background-position: left center; 
+    background-position: left center;
     background-size: 15% auto;
 }
 .email-icon {
 	background-image: url("../images/mail_b30.png");
 	background-repeat: no-repeat;
-    background-position: left center; 
+    background-position: left center;
     background-size: 15% auto;
 }
 .contact-icon {
 	background-image: url("../images/contact_b30.png");
 	background-repeat: no-repeat;
-    background-position: left center; 
+    background-position: left center;
     background-size: 15% auto;
 }
 .no-corners {
