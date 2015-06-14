@@ -37,3 +37,25 @@ app.factory('feedService', ['$http', function($http) {
         }
   };
 }]);
+
+app.factory('subscribeService', ['$http', function($http) {
+        var url = "http://signalizator.cloudapp.net:8080/saveUser";
+
+    return {
+        register: function(bounds, email) {
+            var getParams = {
+                'lowerLeftX':bounds.getWest(),
+                'lowerLeftY':bounds.getSouth(),
+                'upperRightX':bounds.getEast(),
+                'upperRightY':bounds.getNorth(),
+                'email': email,
+            };
+
+            var promise = $http.post(url, {params: getParams})
+                .then(function (response) {
+                    console.log('User registered');
+            });
+            return promise;
+        }
+  };
+}]);
