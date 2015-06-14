@@ -62,6 +62,9 @@ form#circle input {
 	font-size: 3em;
 	text-transform: uppercase;
 }
+.header a {
+	color: white;
+}
 .right {
     width: 180px;
     float: right;
