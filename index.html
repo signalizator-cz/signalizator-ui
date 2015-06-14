@@ -33,11 +33,10 @@
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css">
     <link rel="stylesheet" href="bower_components/leaflet.markercluster/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="bower_components/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="stylesheets/main.css">
 
-
-    <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
-    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
     <link href="http://///fonts.googleapis.com/css?family=Squada+One:400" rel="stylesheet" type="text/css">
 </head>
 
@@ -57,49 +56,63 @@
 	</div>
 
     <div id="feed" class="scrollable-panel right">
-                    <div>
-			<ul class="nav nav-tabs nav-justified">
-				<li class="active"><a href="#" class="no-corners announcment-icon">Oznámení</a></li>
-				<li><a href="#" class="no-corners email-icon" ng-click="subscribe = !subscribe">Notifikace</a></li>
-				<li><a href="#" class="no-corners contact-icon">Kontakty</a></li>
-			</ul>
-                    </div>
-			<div class="custom-panel panel-default">
-				<div ng-show="subscribe" id="subscribe-panel" class="subscribe-panel">
-				<br/>
-				Pro zasílání notifikací emailem vyberte <a href="#" ng-click="enableDraw()">selektorem <span class="glyphicon glyphicon-stop"></span></a> oblast, která vás zajímá. Oznámení vám příjdou jednou týdně.
-					<form name="subscription" action="#">
-						<label for="email" class="sr-only">Email</label>
-						<input type="email" name="email" ng-model="emailValue"
-							id="email" class="form-control" placeholder="Email na který posílat notifikace">
-						<input type="submit" class="btn" value="Odebírat novinky z vyznačené lokality" ng-click="subscribe()"
-                            ng-disabled="!areaSelected">
-                        <div>
-                            <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
-                        </div>
-					</form>
-					<hr/>
-				</div>
-				<div>
-					<h3>Výpis z úředních desek</h3>
-					<hr />
-				</div>
-				<ul class="panel-group list-unstyled">
-					<li id="record-{{record.id}}" class="panel-default anchor"
-						ng-class="{selected: record.selected}"
-						ng-repeat="record in records track by record.id"><a
-						class="record-title" title="{{record.title}}"
-						ng-click="selectRecord(record, $event)">
-							<h4>{{record.title}}</h4>
-					</a>
-						<div>
-							Odkaz: <a ng-href="{{record.url}}" title="{{record.title}}"><span
-								class="glyphicon glyphicon-link" style="font-size: 20pt"></span></a>
-						</div>
-						<div>Datum: {{record.date}}</div>
-						<hr /></li>
-				</ul>
-			</div>
+            <div>
+                <tabset justified="true" class="tabs">
+                    <tab>
+                        <tab-heading><i class="ion-chatbox"></i> Oznámení</tab-heading>
+                        <h2>Výpis z úředních desek</h2>
+                        <ul class="panel-group list-unstyled">
+                            <li id="record-{{record.id}}" class="panel-default anchor"
+                                ng-class="{selected: record.selected}"
+                                ng-repeat="record in records track by record.id">
+                                <a class="record-title" title="{{record.title}}"
+                                    ng-click="selectRecord(record, $event)">
+                                    <h4>{{record.title}}</h4>
+                                </a>
+                                <div>
+                                    Odkaz:
+                                    <a ng-href="{{record.url}}" title="{{record.title}}">
+                                        <span class="glyphicon glyphicon-link" style="font-size: 20pt"></span>
+                                    </a>
+                                </div>
+                                <div>Datum: {{record.date}}</div>
+                            </li>
+                        </ul>
+                    </tab>
+                    <tab>
+                        <tab-heading><i class="ion-email"></i> Notifikace</tab-heading>
+
+                        <h2>Posílat notifikace emailem</h2>
+                        <p>Pro zasílání notifikací emailem vyberte
+                        <a href="#" ng-click="enableDraw()">selektorem <span class="glyphicon glyphicon-stop"></span></a>
+                        oblast, která vás zajímá.</p>
+                        <p> Oznámení Vám Signalizator posílá jednou týdně a je možné je kdykoliv odhlásit.</p>
+                        <form name="subscription" action="#">
+                            <p class="input-group">
+                                <label for="email">Vaše emailová adresa:</label>
+                                <input type="email" name="email" ng-model="emailValue"
+                                    id="email" class="form-control" placeholder="email@email.cz">
+                            </p>
+                            <input type="submit" class="btn" value="Odebírat novinky z vyznačené lokality" ng-click="subscribe()"
+                                ng-disabled="!areaSelected">
+                            <div>
+                                <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+                            </div>
+                        </form>
+                    </tab>
+                    <tab>
+                        <tab-heading><i class="ion-person"></i> Kontakty</tab-heading>
+                        <h2>Kontakty</h2>
+                        <p>
+                            Signalizátor vznikl v rámce akce <a href="http://www.praguehacks.cz/" target="_blank">Praguehacks.cz</a>.
+                            Data o úředních deskách čerpá z aplikace eDesky.cz a dále je lokalizuje až na konkrétní  ulici.
+                        </p>
+                        <p>
+                            Pište na <a href="mailto:jsem@signalizator.cz">jsem@signalizator.cz</a>
+                        </p>
+                    </tab>
+                  </tabset>
+            </div>
 		</div>
 
     <div class="fullscreen left">

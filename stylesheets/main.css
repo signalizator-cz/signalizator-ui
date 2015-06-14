@@ -20,6 +20,9 @@ html, body {
     left: 45px;
 }
 
+h2 {
+    font-size: 25px;
+}
 #feed {
     top: 1em;
     right: 1em;
@@ -29,6 +32,14 @@ html, body {
     margin-bottom: 0px;
 }
 
+h2, #feed .tab-content li{
+    border-bottom: #EEEEEE solid 1px;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+#feed li h4 {
+
+}
 #feed li.selected>a {
     color: #337ab7;
 }
@@ -42,9 +53,7 @@ form#circle input {
 }
 
 .scrollable-panel {
-
-   /* position: absolute; */
-	overflow: auto;
+	overflow: scroll;
 }
 .scrollable-panel div{
 	margin-bottom: 0px;
@@ -82,30 +91,17 @@ form#circle input {
 	color: #ff4c00;
 	text-decoration: underline;
 }
-.custom-panel {
+.tab-content {
     padding: 30px;
     padding-top: 0px;
 }
-.announcment-icon {
-	background-image: url("../images/announcement_b30.png");
-	background-repeat: no-repeat;
-    background-position: left center;
-    background-size: 15% auto;
+.tabs .nav>li>a{
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0 !important;
+    padding: 0;
 }
-.email-icon {
-	background-image: url("../images/mail_b30.png");
-	background-repeat: no-repeat;
-    background-position: left center;
-    background-size: 15% auto;
-}
-.contact-icon {
-	background-image: url("../images/contact_b30.png");
-	background-repeat: no-repeat;
-    background-position: left center;
-    background-size: 15% auto;
-}
-.no-corners {
--webkit-border-radius: 0;
--moz-border-radius: 0;
-border-radius: 0 !important;
+.tabs i {
+    font-size: 30px;
+    vertical-align: middle;
 }
