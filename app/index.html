@@ -35,23 +35,40 @@
     <link rel="stylesheet" type="text/css" href="../stylesheets/main.css">
     <link rel="stylesheet" type="text/css" href="../components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link href="http://///fonts.googleapis.com/css?family=Squada+One:400" rel="stylesheet" type="text/css">
 </head>
 
 <body ng-controller="GoogleMapsFullsizeController">
-	<div class="header"><h2>header</h2></div>
+	<div class="header">
+		<img src="../images/logo_pin_w_50.png">
+		<h1 style="display: inline; margin-left: 20px">Signalizator</h1>
+	</div>
+	
     <div id="feed" class="scrollable-panel right">
-    <div><h2>test</h2></div>
-        <div class="panel panel-default">
-            <ul class="panel-group list-unstyled">
-                <li id="record-{{record.id}}" class="panel panel-default anchor" ng-class="{selected: record.selected}" ng-repeat="record in records track by record.id">
-
-                    <a class="panel-heading" title="{{record.title}}" ng-click="selectRecord(record, $event)">
-                        {{record.title}}</a>
                     <div>
-                        <p><a ng-href="{{record.url}}" title="{{record.title}}">{{record.url}}</a></p>
-                        <p>{{record.body}}</p>
+			<ul class="nav nav-tabs nav-justified">
+				<li class="active"><a href="#" class="no-corners announcment-icon">Oznámení</a></li>
+				<li><a href="#" class="no-corners">Notifikace</a></li>
+				<li><a href="#" class="no-corners">Kontakty</a></li>
+			</ul>
                     </div>
-                </li>
+		<div class="custom-panel panel-default">
+			<div>
+				<h3>Výpis z úředních desek</h3>
+				<hr/>
+			</div>
+			<ul class="panel-group list-unstyled">
+				<li id="record-{{record.id}}" class="panel-default anchor"
+					ng-class="{selected: record.selected}"
+					ng-repeat="record in records track by record.id"><a
+					class="record-title" title="{{record.title}}"
+					ng-click="selectRecord(record, $event)">
+						<h4>{{record.title}}</h4>
+				</a>
+					<div>Odkaz: <a ng-href="{{record.url}}" title="{{record.title}}"><span
+							class="glyphicon glyphicon-link" style="font-size: 20pt"></span></a></div>
+					<div>Datum: {{record.date}}</div>
+					<hr /></li>
             </ul>
         </div>
     </div>
