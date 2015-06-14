@@ -1,4 +1,4 @@
-var app = angular.module("signalizator", ["leaflet-directive"]);
+var app = angular.module("signalizator", ["leaflet-directive", 'ui.bootstrap']);
 
 app.controller("GoogleMapsFullsizeController",
     [ "$scope", "$element", '$anchorScroll', '$location', "leafletData", "leafletMarkersHelpers", "leafletEvents", "feedService", "subscribeService",
