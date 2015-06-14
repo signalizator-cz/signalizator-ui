@@ -88,6 +88,19 @@ form#circle input {
 	background-image: url("../images/announcement_b30.png");
 	background-repeat: no-repeat;
     background-position: left center; 
+    background-size: 15% auto;
+}
+.email-icon {
+	background-image: url("../images/mail_b30.png");
+	background-repeat: no-repeat;
+    background-position: left center; 
+    background-size: 15% auto;
+}
+.contact-icon {
+	background-image: url("../images/contact_b30.png");
+	background-repeat: no-repeat;
+    background-position: left center; 
+    background-size: 15% auto;
 }
 .no-corners {
 -webkit-border-radius: 0;
