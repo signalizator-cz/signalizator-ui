@@ -39,10 +39,11 @@ app.factory('feedService', ['$http', function($http) {
 }]);
 
 app.factory('subscribeService', ['$http', function($http) {
-        var url = "http://signalizator.cloudapp.net:8080/saveUser";
+    var url = "http://signalizator.cloudapp.net:8080/saveUser";
 
     return {
         register: function(bounds, email) {
+            console.log(email);
             var getParams = {
                 'lowerLeftX':bounds.getWest(),
                 'lowerLeftY':bounds.getSouth(),
@@ -54,6 +55,10 @@ app.factory('subscribeService', ['$http', function($http) {
             var promise = $http.post(url, {params: getParams})
                 .then(function (response) {
                     console.log('User registered');
+            },
+            function(reason) {
+                console.log('Registration failed:');
+                console.log(reason);
             });
             return promise;
         }
