@@ -14,6 +14,7 @@
     <script src="../components/leaflet/dist/leaflet.js"></script>
     <script src="../components/leaflet.draw/dist/leaflet.draw.js"></script>
     <script src="../components/leaflet-plugins/layer/tile/Google.js"></script>
+    <script src="../components/leaflet-plugins/layer/tile/Bing.js"></script>
     <script src="../components/Leaflet.fullscreen/dist/Leaflet.fullscreen.min.js"></script>
     <script src="../components/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
     <script src="../components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
@@ -28,13 +29,12 @@
     <link rel="stylesheet" href="../components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css">
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css">
     <link rel="stylesheet" href="../components/leaflet.markercluster/dist/MarkerCluster.css" />
-    <link rel="stylesheet" href=".../components/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+    <link rel="stylesheet" href="../components/leaflet.markercluster/dist/MarkerCluster.Default.css" />
 
 
     <link rel="stylesheet" type="text/css" href="../stylesheets/main.css">
     <link rel="stylesheet" type="text/css" href="../components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../components/bootstrap/dist/css/bootstrap-theme.min.css">
-    
     <link href="http://///fonts.googleapis.com/css?family=Squada+One:400" rel="stylesheet" type="text/css">
 </head>
 
@@ -43,22 +43,22 @@
 		<img src="../images/logo_pin_w_50.png">
 		<h1 style="display: inline; margin-left: 20px">Signalizator</h1>
 	</div>
-
-	<div id="feed" class="scrollable-panel right">
-		<div>
+	
+    <div id="feed" class="scrollable-panel right">
+                    <div>
 			<ul class="nav nav-tabs nav-justified">
 				<li class="active"><a href="#" class="no-corners announcment-icon">Oznámení</a></li>
 				<li><a href="#" class="no-corners">Notifikace</a></li>
 				<li><a href="#" class="no-corners">Kontakty</a></li>
 			</ul>
-		</div>
+                    </div>
 		<div class="custom-panel panel-default">
 			<div>
 				<h3>Výpis z úředních desek</h3>
 				<hr/>
 			</div>
 			<ul class="panel-group list-unstyled">
-				<li id="record-{{record.id}}" class="panel-default"
+				<li id="record-{{record.id}}" class="panel-default anchor"
 					ng-class="{selected: record.selected}"
 					ng-repeat="record in records track by record.id"><a
 					class="record-title" title="{{record.title}}"
@@ -69,8 +69,8 @@
 							class="glyphicon glyphicon-link" style="font-size: 20pt"></span></a></div>
 					<div>Datum: {{record.date}}</div>
 					<hr /></li>
-			</ul>
-		</div>
+            </ul>
+        </div>
     </div>
 
     <div class="fullscreen left">
