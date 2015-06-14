@@ -41,8 +41,8 @@ app.factory('feedService', ['$http', function($http) {
 }]);
 
 app.controller("GoogleMapsFullsizeController",
-    [ "$scope", "$element", '$anchorScroll', '$location', "leafletData", "leafletEvents", "feedService",
-    function($scope, $element, $anchorScroll, $location, leafletData, leafletEvents, feedService) {
+    [ "$scope", "$element", '$anchorScroll', '$location', "leafletData", "leafletMarkersHelpers", "leafletEvents", "feedService",
+    function($scope, $element, $anchorScroll, $location, leafletData, leafletMarkersHelpers, leafletEvents, feedService) {
 
     angular.extend($scope, {
         // maxbounds: {
@@ -56,6 +56,17 @@ app.controller("GoogleMapsFullsizeController",
         //     }
         // },
         layers: {
+            overlays: {
+                locations: {
+                    name: "Lokace",
+                    type: "markercluster",
+                    visible: false,
+                    layerOptions: {
+                        showCoverageOnHover: false,
+                        removeOutsideVisibleBounds: true
+                    }
+                }
+            },
             baselayers: {
                 googleRoadmap: {
                     name: 'Google Streets',
@@ -139,6 +150,7 @@ app.controller("GoogleMapsFullsizeController",
         selectedRecords: [],
 
         refreshRecords: function(coordinates) {
+            leafletMarkersHelpers.resetMarkerGroups();
             feedService.records(coordinates).then(function(data) {
                 $scope.records = data.records;
             $scope.markersMap = {};
@@ -146,7 +158,7 @@ app.controller("GoogleMapsFullsizeController",
                 return _.map(_.values(record.markers), function(marker) {
                     marker.rid = record.id;
                     marker.icon = {"type": 'awesomeMarker', "icon": 'tag', "markerColor": $scope.icons[false]};
-                    marker.group = 'main';
+                    marker.layer = 'locations';
                     $scope.markersMap[record.id + '-' + marker.id] = marker;
                     return marker;
                 });
@@ -184,7 +196,7 @@ app.controller("GoogleMapsFullsizeController",
         }
     });
 
-leafletData.getMap().then(function(map) {
+leafletData.getMap('mainMap').then(function(map) {
   var drawnItems = $scope.controls.edit.featureGroup;
   map.on('draw:created', function (e) {
     var layer = e.layer;
@@ -198,17 +210,15 @@ $scope.$on('leafletDirectiveMarker.click', function (event, args) {
     $scope.selectRecord($scope.records[args.model.rid]);
 });
 $scope.$on('leafletDirectiveMap.zoomend', function(event, args){
-    leafletData.getMap().then(function(map) {
+    leafletData.getMap('mainMap').then(function(map) {
         $scope.refreshRecords(map.getBounds());
     });
 });
 $scope.$on('leafletDirectiveMap.dragend', function(event, args){
-    leafletData.getMap().then(function(map) {
+    leafletData.getMap('mainMap').then(function(map) {
         $scope.refreshRecords(map.getBounds());
     });
 });
-
-
 
 }]);
 
