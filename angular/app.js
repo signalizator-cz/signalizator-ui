@@ -20,7 +20,7 @@ app.controller("GoogleMapsFullsizeController",
                 locations: {
                     name: "Lokace",
                     type: "markercluster",
-                    visible: false,
+                    visible: true,
                     layerOptions: {
                         showCoverageOnHover: false,
                         removeOutsideVisibleBounds: true
@@ -72,7 +72,7 @@ app.controller("GoogleMapsFullsizeController",
         controls: {
             position: 'topleft',
             draw: {
-                circle: true,
+                circle: false,
                 marker: false,
                 polyline: false,
                 polygon: false,
@@ -108,6 +108,7 @@ app.controller("GoogleMapsFullsizeController",
             radius: 13
         },
         selectedRecords: [],
+        areaSelected: false,
 
         refreshRecords: function(coordinates) {
             leafletMarkersHelpers.resetMarkerGroups();
@@ -157,13 +158,24 @@ app.controller("GoogleMapsFullsizeController",
     });
 
 leafletData.getMap('mainMap').then(function(map) {
-  var drawnItems = $scope.controls.edit.featureGroup;
-  map.on('draw:created', function (e) {
-    var layer = e.layer;
-    drawnItems.clearLayers();
-    drawnItems.addLayer(layer);
-    $scope.refreshRecords(layer.getBounds());
-});
+    var drawnItems = $scope.controls.edit.featureGroup;
+    map.on('draw:deleted', function (e) {
+        $scope.areaSelected = false;
+    });
+    map.on('draw:created', function (e) {
+        var layer = e.layer;
+        drawnItems.clearLayers();
+        drawnItems.addLayer(layer);
+        $scope.areaSelected = true;
+        $scope.refreshRecords(layer.getBounds());
+    });
+
+
+    $scope.rectangleDraw = new L.Draw.Rectangle(map);
+    $scope.enableDraw = function() {
+        console.log($scope.rectangleDraw);
+        $scope.rectangleDraw.enable();
+    };
 });
 
 $scope.$on('leafletDirectiveMarker.click', function (event, args) {
