@@ -5,13 +5,16 @@ app.controller("GoogleMapsFullsizeController",
     function($scope, $element, $anchorScroll, $location, leafletData, leafletMarkersHelpers, leafletEvents, feedService, subscribeService) {
 
     angular.extend($scope, {
-        // maxbounds: {
-        //     northEast: {
         maxbounds: {
             northEast: {
-                lat: 50.25,
+                lat: 50.20,
                 lng: 15.00
-
+            },
+            southWest: {
+                lat: 49.90,
+                lng: 14.00
+            }
+        },
         layers: {
             overlays: {
                 locations: {
