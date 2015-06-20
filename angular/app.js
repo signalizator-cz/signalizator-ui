@@ -92,8 +92,8 @@ app.controller("GoogleMapsFullsizeController",
         },
 
         icons: {
-            false: 'red',
-            true: 'green'
+            false: 'orange',
+            true: 'blue'
         },
 
         city: {

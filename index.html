@@ -73,7 +73,7 @@
                                 <div>
                                     Odkaz:
                                     <a ng-href="{{record.url}}" title="{{record.title}}">
-                                        <span class="glyphicon glyphicon-link" style="font-size: 20pt"></span>
+                                        <span class="ion-link" style="font-size: 30pt; vertical-align: middle"></span>
                                     </a>
                                 </div>
                                 <div>Datum: {{record.date}}</div>
@@ -88,7 +88,7 @@
                         <a href="#" ng-click="enableDraw()">selektorem <span class="glyphicon glyphicon-stop"></span></a>
                         oblast, která vás zajímá.</p>
                         <p> Oznámení Vám Signalizator posílá jednou týdně a je možné je kdykoliv odhlásit.</p>
-                        <form name="subscription" action="#">
+                        <form name="subscription">
                             <p class="input-group">
                                 <label for="email">Vaše emailová adresa:</label>
                                 <input type="email" name="email" ng-model="emailValue"
@@ -111,6 +111,11 @@
                         <p>
                             Pište na <a href="mailto:jsem@signalizator.cz">jsem@signalizator.cz</a>
                         </p>
+                        <div style="text-align: center;" >
+                            <a href="https://github.com/signalizator-cz" title="Forkni mě na GitHubu">
+                                <span class="ion-social-github" style="font-size: 50pt; vertical-align: middle"></span>
+                            </a>
+                        </div>
                     </tab>
                   </tabset>
             </div>
