@@ -7,14 +7,11 @@ app.controller("GoogleMapsFullsizeController",
     angular.extend($scope, {
         // maxbounds: {
         //     northEast: {
-        //         lat: 52.00,
-        //         lng: 15.00
-        //     },
-        //     southWest: {
-        //         lat: 50.00,
-        //         lng: 14.20
-        //     }
-        // },
+        maxbounds: {
+            northEast: {
+                lat: 50.25,
+                lng: 15.00
+
         layers: {
             overlays: {
                 locations: {
@@ -23,7 +20,8 @@ app.controller("GoogleMapsFullsizeController",
                     visible: true,
                     layerOptions: {
                         showCoverageOnHover: false,
-                        removeOutsideVisibleBounds: true
+                        removeOutsideVisibleBounds: true,
+                        zoomToBoundsOnClick: false
                     }
                 }
             },
@@ -116,22 +114,16 @@ app.controller("GoogleMapsFullsizeController",
             $scope.selectedAreaBounds = bounds;
             feedService.records(bounds).then(function(data) {
                 $scope.records = data.records;
-            $scope.markersMap = {};
-            $scope.markers = _.flatten(_.map(data.records, function(record) {
-                return _.map(_.values(record.markers), function(marker) {
-                    marker.rid = record.id;
-                    marker.icon = {"type": 'awesomeMarker', "icon": 'tag', "markerColor": $scope.icons[false]};
-                    marker.layer = 'locations';
-                    $scope.markersMap[record.id + '-' + marker.id] = marker;
-                    return marker;
-                });
-            }));
-
-            // console.log(leafletMarkersHelpers);
-            // leafletData.getMarkers('mainMap').then(function(lmarkers) {
-            //     console.log("mainMap");
-            //     console.log(lmarkers);
-            // });
+                $scope.markersMap = {};
+                $scope.markers = _.flatten(_.map(data.records, function(record) {
+                    return _.map(_.values(record.markers), function(marker) {
+                        marker.rid = record.id;
+                        marker.icon = {"type": 'awesomeMarker', "icon": 'tag', "markerColor": $scope.icons[false]};
+                        marker.layer = 'locations';
+                        $scope.markersMap[record.id + '-' + marker.id] = marker;
+                        return marker;
+                    });
+                    }));
             });
         },
 
@@ -176,7 +168,6 @@ app.controller("GoogleMapsFullsizeController",
         alerts: [],
 
         addAlert: function() {
-            console.log("alert")
             $scope.alerts.push({type: "success", msg: 'Odesláno.'});
         },
 
@@ -208,6 +199,17 @@ leafletData.getMap('mainMap').then(function(map) {
         console.log($scope.rectangleDraw);
         $scope.rectangleDraw.enable();
     };
+});
+
+leafletData.getLayers('mainMap').then(function(layers) {
+    markers = layers.overlays.locations;
+
+    markers.on('clusterclick', function(event, args){
+        event.layer.getAllChildMarkers()
+    });
+    markers.on('clusterdblclick', function(event, args){
+        event.layer.zoomToBounds();
+    });
 });
 
 $scope.$on('leafletDirectiveMarker.click', function (event, args) {
