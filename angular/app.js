@@ -5,6 +5,9 @@ app.controller("GoogleMapsFullsizeController",
     function($scope, $element, $anchorScroll, $location, leafletData, leafletMarkersHelpers, leafletEvents, feedService, subscribeService) {
 
     angular.extend($scope, {
+        defaults: {
+            minZoom: 11
+        },
         maxbounds: {
             northEast: {
                 lat: 50.20,
