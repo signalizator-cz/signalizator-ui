@@ -1,4 +1,8 @@
-app.factory('feedService', ['$http', function($http) {
+(function(){
+'use strict';
+
+angular.module('signalizator')
+.factory('feedService', ['$http', function($http) {
 
     var dummy_data = false;
 
@@ -38,7 +42,8 @@ app.factory('feedService', ['$http', function($http) {
   };
 }]);
 
-app.factory('subscribeService', ['$http', function($http) {
+angular.module('signalizator')
+.factory('subscribeService', ['$http', function($http) {
     var url = "http://signalizator.cloudapp.net:8080/saveUser";
 
     return {
@@ -64,3 +69,5 @@ app.factory('subscribeService', ['$http', function($http) {
         }
   };
 }]);
+
+})();

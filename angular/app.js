@@ -1,117 +1,15 @@
-var app = angular.module("signalizator", ["leaflet-directive", 'ui.bootstrap']);
+(function(){
+'use strict';
 
-app.controller("GoogleMapsFullsizeController",
-    [ "$scope", "$element", '$anchorScroll', '$location', "leafletData", "leafletMarkersHelpers", "leafletEvents", "feedService", "subscribeService",
-    function($scope, $element, $anchorScroll, $location, leafletData, leafletMarkersHelpers, leafletEvents, feedService, subscribeService) {
+angular.module("signalizator", ["leaflet-directive", 'ui.bootstrap'])
+.controller("GoogleMapsFullsizeController",
+    [ "$scope", "$element", '$anchorScroll', '$location', "leafletData", "leafletMarkersHelpers", "leafletEvents", "feedService", "subscribeService", "leafletConfig",
+    function($scope, $element, $anchorScroll, $location, leafletData, leafletMarkersHelpers, leafletEvents, feedService, subscribeService, leafletConfig) {
+
+    angular.extend($scope, leafletConfig);
 
     angular.extend($scope, {
-        defaults: {
-            minZoom: 11
-        },
-        maxbounds: {
-            northEast: {
-                lat: 50.20,
-                lng: 15.00
-            },
-            southWest: {
-                lat: 49.90,
-                lng: 14.00
-            }
-        },
-        layers: {
-            overlays: {
-                locations: {
-                    name: "Lokace",
-                    type: "markercluster",
-                    visible: true,
-                    layerOptions: {
-                        showCoverageOnHover: false,
-                        removeOutsideVisibleBounds: true,
-                        zoomToBoundsOnClick: false
-                    }
-                }
-            },
-            baselayers: {
-                googleRoadmap: {
-                    name: 'Google Streets',
-                    layerType: 'ROADMAP',
-                    type: 'google'
-                },
-                googleTerrain: {
-                    name: 'Google Terrain',
-                    layerType: 'TERRAIN',
-                    type: 'google'
-                },
-                googleHybrid: {
-                    name: 'Google Hybrid',
-                    layerType: 'HYBRID',
-                    type: 'google'
-                },
-                bingAerial: {
-                    name: 'Bing Aerial',
-                    type: 'bing',
-                    key: 'Aj6XtE1Q1rIvehmjn2Rh1LR2qvMGZ-8vPS9Hn3jCeUiToM77JFnf-kFRzyMELDol',
-                    layerOptions: {
-                        type: 'Aerial'
-                    }
-                },
-                bingRoad: {
-                    name: 'Bing Road',
-                    type: 'bing',
-                    key: 'Aj6XtE1Q1rIvehmjn2Rh1LR2qvMGZ-8vPS9Hn3jCeUiToM77JFnf-kFRzyMELDol',
-                    layerOptions: {
-                        type: 'Road'
-                    }
-                },
-                bingAerialWithLabels: {
-                    name: 'Bing Aerial With Labels',
-                    type: 'bing',
-                    key: 'Aj6XtE1Q1rIvehmjn2Rh1LR2qvMGZ-8vPS9Hn3jCeUiToM77JFnf-kFRzyMELDol',
-                    layerOptions: {
-                        type: 'AerialWithLabels'
-                    }
-                },
-            }
-        },
-        controls: {
-            position: 'topleft',
-            draw: {
-                circle: false,
-                marker: false,
-                polyline: false,
-                polygon: false,
-                rectangle: true
-            },
-            fullscreen: {
-                position: 'topleft'
-            }
-        },
-        events: {
-            disable: [],
-            // markers: {
-            //     enable: leafletEvents.getAvailableMarkerEvents(),
-            // },
-            // map: {
-            //     enable: ['zoomend', 'dragend'],
-            //     logic: 'emit'
-            // }
-        },
 
-        icons: {
-            false: 'orange',
-            true: 'blue'
-        },
-
-        city: {
-            lat: 50.08,
-            lng: 14.41,
-            zoom: 12
-        },
-        circle: {
-            lat: 50.08,
-            lng: 14.41,
-            radius: 13
-        },
         selectedRecords: [],
         areaSelected: false,
 
@@ -135,7 +33,7 @@ app.controller("GoogleMapsFullsizeController",
 
         selectRecord: function(record, $event) {
             for (var i = 0; i < $scope.selectedRecords.length; i++) {
-                prevSelectedRec = $scope.selectedRecords[i];
+                var prevSelectedRec = $scope.selectedRecords[i];
                 prevSelectedRec.selected = false;
                 $scope.setSelectedMarkers(prevSelectedRec, false);
             }
@@ -146,9 +44,9 @@ app.controller("GoogleMapsFullsizeController",
         },
 
         setSelectedMarkers: function(record, selected) {
-            markersArr = _.values(record.markers);
+            var markersArr = _.values(record.markers);
             for (var i = 0; i < markersArr.length; i++) {
-                marker = markersArr[i];
+                var marker = markersArr[i];
                 $scope.markersMap[record.id + '-' + marker.id].icon.markerColor = $scope.icons[selected];
             }
         },
@@ -208,10 +106,10 @@ leafletData.getMap('mainMap').then(function(map) {
 });
 
 leafletData.getLayers('mainMap').then(function(layers) {
-    markers = layers.overlays.locations;
+    var markers = layers.overlays.locations;
 
     markers.on('clusterclick', function(event, args){
-        event.layer.getAllChildMarkers()
+        event.layer.getAllChildMarkers();
     });
     markers.on('clusterdblclick', function(event, args){
         event.layer.zoomToBounds();
@@ -241,3 +139,5 @@ $scope.$on('clusterclick', function(event, args){
     console.log(event);
 });
 }]);
+
+})();

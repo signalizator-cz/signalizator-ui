@@ -26,6 +26,7 @@
 
     <script src="angular/app.js"></script>
     <script src="angular/services.js"></script>
+    <script src="angular/leafletConfig.js"></script>
 
     <link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="bower_components/leaflet.draw/dist/leaflet.draw.css" />
@@ -122,7 +123,8 @@
 		</div>
 
     <div class="fullscreen left">
-        <leaflet id="mainMap" class="span2" event-broadcast="events" center="city" layers="layers" markers="markers" controls="controls"maxbounds="maxbounds" defaults="defaults" height="100%"></leaflet>
+        <leaflet id="mainMap" class="span2" event-broadcast="events" center="center" layers="layers" markers="markers" controls="controls"
+        maxbounds="maxbounds" defaults="defaults" height="100%"></leaflet>
     </div>
 </div>
 </body>
