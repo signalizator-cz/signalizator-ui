@@ -95,7 +95,7 @@
                                 <input type="email" name="email" ng-model="emailValue"
                                     id="email" class="form-control" placeholder="email@email.cz">
                             </p>
-                            <input type="submit" class="btn" value="Odebírat novinky z vyznačené lokality" ng-click="subscribe()"
+                            <input type="submit" class="btn" value="Odebírat novinky z vyznačené lokality" ng-click="subscribe(emailValue)"
                                 ng-disabled="!areaSelected">
                             <div>
                                 <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>

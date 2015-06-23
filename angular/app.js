@@ -60,10 +60,8 @@ angular.module("signalizator", ["leaflet-directive", 'ui.bootstrap'])
             }
         },
 
-        subscribe: function() {
-            console.log("subscribe");
-            console.log($scope.emailValue);
-            subscribeService.register($scope.selectedAreaBounds, $scope.emailValue).then(function(data) {
+        subscribe: function(email) {
+            subscribeService.register($scope.selectedAreaBounds, email).then(function(data) {
                 console.log(data);
             });
             $scope.addAlert();
