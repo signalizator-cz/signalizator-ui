@@ -34,11 +34,10 @@ h2 {
 
 h2, #feed .tab-content li{
     border-bottom: #EEEEEE solid 1px;
-    padding-bottom: 15px;
-    margin-bottom: 15px;
+    padding: 15px 0;
 }
 #feed li h4 {
-
+    margin-top: 0;
 }
 #feed li.selected>a {
     color: #337ab7;
