@@ -54,6 +54,7 @@ angular.module("signalizator", ["leaflet-directive", 'ui.bootstrap'])
         gotoAnchor: function(rid) {
             var newHash = 'record-' + rid;
             if ($location.hash() !== newHash) {
+                $location.path("");
                 $location.hash(newHash);
             } else {
                 $anchorScroll();
