@@ -68,7 +68,7 @@
                                 ng-class="{selected: record.selected}"
                                 ng-repeat="record in records track by record.id">
                                 <a class="record-title" title="{{record.title}}"
-                                    ng-click="selectRecord(record, $event)">
+                                    ng-click="selectRecords([record], $event)">
                                     <h4>{{record.title}}</h4>
                                 </a>
                                 <div>

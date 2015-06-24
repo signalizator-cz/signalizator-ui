@@ -3,8 +3,8 @@
 
 angular.module("signalizator", ["leaflet-directive", 'ui.bootstrap'])
 .controller("GoogleMapsFullsizeController",
-    [ "$scope", "$element", '$anchorScroll', '$location', "leafletData", "leafletMarkersHelpers", "leafletEvents", "feedService", "subscribeService", "leafletConfig",
-    function($scope, $element, $anchorScroll, $location, leafletData, leafletMarkersHelpers, leafletEvents, feedService, subscribeService, leafletConfig) {
+    [ "$scope", "$element", '$anchorScroll', '$location', "$timeout", "leafletData", "leafletMarkersHelpers", "leafletEvents", "feedService", "subscribeService", "leafletConfig",
+    function($scope, $element, $anchorScroll, $location, $timeout, leafletData, leafletMarkersHelpers, leafletEvents, feedService, subscribeService, leafletConfig) {
 
     angular.extend($scope, leafletConfig);
 
@@ -14,41 +14,64 @@ angular.module("signalizator", ["leaflet-directive", 'ui.bootstrap'])
         areaSelected: false,
 
         refreshRecords: function(bounds) {
-            leafletMarkersHelpers.resetMarkerGroups();
             $scope.selectedAreaBounds = bounds;
             feedService.records(bounds).then(function(data) {
                 $scope.records = data.records;
-                $scope.markersMap = {};
                 $scope.markers = _.flatten(_.map(data.records, function(record) {
                     return _.map(_.values(record.markers), function(marker) {
                         marker.rid = record.id;
-                        marker.icon = {"type": 'awesomeMarker', "icon": 'tag', "markerColor": $scope.icons[false]};
                         marker.layer = 'locations';
-                        $scope.markersMap[record.id + '-' + marker.id] = marker;
+                        marker.title = marker.rid + '-' + marker.id;
                         return marker;
                     });
                     }));
+
+                $timeout(function() {
+                    $scope.markersMap = {};
+                    leafletData.getMarkers().then(function(markers) {
+                        var markersArr = _.values(markers);
+                        for (var i = 0; i < markersArr.length; i++) {
+                            var marker = markersArr[i];
+                            marker.setIcon($scope.icons[false]);
+                            $scope.markersMap[marker.options.rid + '-' + marker.options.id] = marker;
+                        }
+                    });
+                }, 100);
+
             });
         },
 
-        selectRecord: function(record, $event) {
+        selectRecords: function(records, $event) {
             for (var i = 0; i < $scope.selectedRecords.length; i++) {
                 var prevSelectedRec = $scope.selectedRecords[i];
                 prevSelectedRec.selected = false;
+                console.log("record deselected: " + prevSelectedRec.id);
                 $scope.setSelectedMarkers(prevSelectedRec, false);
             }
-            record.selected = true;
-            $scope.selectedRecords = [record];
-            $scope.setSelectedMarkers(record, true);
-            $scope.gotoAnchor(record.id);
+            for (var j = 0; j < records.length; j++) {
+                records[j].selected = true;
+                $scope.setSelectedMarkers(records[j], true);
+                console.log("record selected: " + records[j].id);
+            }
+            $scope.selectedRecords = records;
+            $scope.gotoAnchor(records[0].id);
+            _.defer(function(){$scope.$apply();});
         },
 
         setSelectedMarkers: function(record, selected) {
             var markersArr = _.values(record.markers);
             for (var i = 0; i < markersArr.length; i++) {
                 var marker = markersArr[i];
-                $scope.markersMap[record.id + '-' + marker.id].icon.markerColor = $scope.icons[selected];
+                console.log("marker " + record.id + '-' + marker.id + " selected set: " + selected);
+                $scope.markersMap[record.id + '-' + marker.id].setIcon($scope.icons[selected]);
             }
+        },
+
+        setSelectedCluster: function (rmid) {
+            var marker = $scope.markersMap[rmid];
+            parent = marker.__parent._group;
+            var visibleCluster = parent.getVisibleParent(marker);
+            visibleCluster._icon.className += " selected";
         },
 
         gotoAnchor: function(rid) {
@@ -108,7 +131,14 @@ leafletData.getLayers('mainMap').then(function(layers) {
     var markers = layers.overlays.locations;
 
     markers.on('clusterclick', function(event, args){
-        event.layer.getAllChildMarkers();
+        console.log(event);
+        // event.layer._icon.className += " selected";
+
+        $scope.selectRecords(
+        _.map(_.uniq(_.map(event.layer.getAllChildMarkers(),'options.rid')),
+            function(rid) {
+                return $scope.records[rid];
+            }));
     });
     markers.on('clusterdblclick', function(event, args){
         event.layer.zoomToBounds();
@@ -116,7 +146,8 @@ leafletData.getLayers('mainMap').then(function(layers) {
 });
 
 $scope.$on('leafletDirectiveMarker.click', function (event, args) {
-    $scope.selectRecord($scope.records[args.model.rid]);
+    console.log("marker clicked: " + args.model.rid + "-" + args.model.id);
+    $scope.selectRecords([$scope.records[args.model.rid]]);
 });
 $scope.$on('leafletDirectiveMap.zoomend', function(event, args){
     if (!$scope.areaSelected) {
@@ -131,11 +162,6 @@ $scope.$on('leafletDirectiveMap.dragend', function(event, args){
             $scope.refreshRecords(map.getBounds());
         });
     }
-});
-
-$scope.$on('clusterclick', function(event, args){
-    console.log('clusterclick');
-    console.log(event);
 });
 }]);
 

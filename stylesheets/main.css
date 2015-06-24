@@ -105,3 +105,7 @@ form#circle input {
     font-size: 30px;
     vertical-align: middle;
 }
+
+.marker-cluster.selected, .marker-cluster.selected div {
+    background-color: rgba(51, 122, 183, 0.6);
+}

@@ -30,7 +30,8 @@ angular.module('signalizator')
                 layerOptions: {
                     showCoverageOnHover: false,
                     removeOutsideVisibleBounds: true,
-                    zoomToBoundsOnClick: false
+                    zoomToBoundsOnClick: false,
+                    spiderfyOnMaxZoom: false
                 }
             }
         },
@@ -99,8 +100,8 @@ angular.module('signalizator')
         }
     },
     icons: {
-        false: 'orange',
-        true: 'blue'
+        false: L.AwesomeMarkers.icon({"icon": 'tag', "markerColor": 'orange'}),
+        true: L.AwesomeMarkers.icon({"icon": 'tag', "markerColor": 'blue'})
     }
 });
 
