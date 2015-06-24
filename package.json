@@ -8,7 +8,7 @@
     "bower": "1.4",
     "jasmine-core": "^2.3.4",
     "karma": "~0.12",
-    "karma-jasmine": "^0.3.5",
+    "karma-jasmine": "^0.3.5"
   },
   "scripts": {
     "postinstall": "bower install",
@@ -17,7 +17,7 @@
     "test": "karma start karma.conf.js",
 
     "prestart": "npm install",
-    "start": "http-server -a localhost -p 8000 -c-1",
+    "start": "http-server -a localhost -p 8000 -c-1"
   },
   "repository": {
     "type": "git",
@@ -27,3 +27,4 @@
   "license": "ISC",
   "homepage": "https://github.com/signalizator-cz/signalizator-ui"
 }
+
